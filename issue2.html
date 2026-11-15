@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Sentinel — Issue #2: Saltwater</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090d16;color:white;font-family:Arial,sans-serif}
+header,footer{background:#111827;padding:12px;text-align:center}
+header{display:flex;justify-content:space-between;align-items:center}
+h1{font-size:16px;margin:0}
+a{color:#fff;text-decoration:none}
+main{height:calc(100dvh - 125px);display:flex;align-items:center;justify-content:center;overflow:auto}
+canvas{max-width:100%;max-height:100%;object-fit:contain}
+footer{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}
+button{background:#1c293b;color:white;border:1px solid #57657b;border-radius:6px;padding:10px;cursor:pointer}
+button:disabled{opacity:.4}
+</style>
+</head>
+<body>
+<header>
+<h1>PROJECT SENTINEL · ISSUE #2: SALTWATER</h1>
+<button onclick="document.documentElement.requestFullscreen()">Full Screen</button>
+</header>
+<main id="viewer">
+<canvas id="comic"></canvas>
+</main>
+<footer>
+<button onclick="changePage(-1)">◀ Previous</button>
+<span id="counter">Loading...</span>
+<button onclick="changePage(1)">Next ▶</button>
+<button onclick="zoom(-0.2)">−</button>
+<button onclick="resetZoom()">Fit</button>
+<button onclick="zoom(0.2)">+</button>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+const pdfFile="Project_Sentinel_Issue_2_Windows_Compatible.pdf";
+let pdf=null,pageNumber=1,scale=1,rendering=false;
+const canvas=document.getElementById("comic");
+const context=canvas.getContext("2d");
+
+async function renderPage(){
+ if(!pdf||rendering)return;
+ rendering=true;
+ const page=await pdf.getPage(pageNumber);
+ const base=page.getViewport({scale:1});
+ const viewer=document.getElementById("viewer");
+ const fit=Math.min(
+ (viewer.clientWidth-16)/base.width,
+ (viewer.clientHeight-16)/base.height
+ );
+ const viewport=page.getViewport({scale:fit*scale});
+ const outputScale=window.devicePixelRatio||1;
+ canvas.width=Math.floor(viewport.width*outputScale);
+ canvas.height=Math.floor(viewport.height*outputScale);
+ canvas.style.width=viewport.width+"px";
+ canvas.style.height=viewport.height+"px";
+ await page.render({
+ canvasContext:context,
+ viewport,
+ transform:outputScale===1?null:
+ [outputScale,0,0,outputScale,0,0]
+ }).promise;
+ document.getElementById("counter").textContent=
+ pageNumber+" / "+pdf.numPages;
+ rendering=false;
+}
+
+async function changePage(direction){
+ if(!pdf||rendering)return;
+ const next=pageNumber+direction;
+ if(next<1||next>pdf.numPages)return;
+ pageNumber=next;
+ await renderPage();
+}
+
+function zoom(amount){
+ scale=Math.max(0.5,Math.min(3,scale+amount));
+ renderPage();
+}
+
+function resetZoom(){
+ scale=1;
+ renderPage();
+}
+
+document.addEventListener("keydown",event=>{
+ if(event.key==="ArrowRight")changePage(1);
+ if(event.key==="ArrowLeft")changePage(-1);
+});
+
+let touchX=0;
+document.getElementById("viewer").addEventListener("touchstart",e=>{
+ touchX=e.changedTouches[0].screenX;
+});
+document.getElementById("viewer").addEventListener("touchend",e=>{
+ const difference=e.changedTouches[0].screenX-touchX;
+ if(Math.abs(difference)>60)changePage(difference<0?1:-1);
+});
+
+pdfjsLib.getDocument(pdfFile).promise.then(document=>{
+ pdf=document;
+ renderPage();
+}).catch(()=>{
+ document.getElementById("counter").textContent="Unable to load comic";
+});
+</script>
+</body>
+</html>
