@@ -104,12 +104,7 @@ async function changePage(direction){
  await new Promise(resolve=>setTimeout(resolve,275));
  canvas.classList.remove(animation);
 }
- if(!pdf||rendering)return;
- const next=pageNumber+direction;
- if(next<1||next>pdf.numPages)return;
- pageNumber=next;
- await renderPage();
-}
+ 
 
 function zoom(amount){
  scale=Math.max(0.5,Math.min(3,scale+amount));
