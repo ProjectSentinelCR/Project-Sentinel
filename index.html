@@ -1,1 +1,139 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project Sentinel — Editions Preview</title><style>body{font-family:Arial;background:#10141d;color:white;text-align:center;padding:25px}a{display:block;background:#1c293b;color:white;padding:16px;margin:12px auto;max-width:380px;border-radius:8px;text-decoration:none}p{color:#bbb}</style><h1>PROJECT SENTINEL</h1><p>Four-edition staging preview — existing homepage unchanged</p><a href="reader.html?edition=issue1-en">Issue #1 — English</a><a href="reader.html?edition=issue1-es">Número 1 — Español</a><a href="reader.html?edition=issue2-en">Issue #2 — English</a><a href="reader.html?edition=issue2-es">Número 2 — Español</a>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Sentinel | Comic Library</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(8,12,20,.35), rgba(8,12,20,.8)),
+    url("sentinel-background.png.png") center center / cover fixed;
+  background-color: #10141d;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+header {
+  padding: 35px 20px 15px;
+}
+
+h1 {
+  font-size: clamp(28px, 5vw, 46px);
+  letter-spacing: 4px;
+  text-shadow: 2px 3px 8px black;
+}
+
+.subtitle {
+  letter-spacing: 3px;
+  color: #e0e0e0;
+}
+
+main {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.library {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 35px;
+  margin-top: 30px;
+}
+
+.comic {
+  width: 300px;
+  padding: 15px;
+  background: rgba(12,18,28,.85);
+  border: 1px solid #667080;
+  border-radius: 10px;
+}
+
+.comic img {
+  width: 100%;
+  height: 380px;
+  object-fit: contain;
+  display: block;
+}
+
+.comic h3 {
+  margin: 15px 0 5px;
+}
+
+.comic p {
+  color: #d0d0d0;
+  margin: 5px 0;
+}
+
+.read {
+  display: block;
+  margin-top: 18px;
+  padding: 14px;
+  background: #a62e2e;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.read:hover {
+  background: #c63b3b;
+}
+
+footer {
+  padding: 35px 15px;
+  color: #ddd;
+  text-shadow: 1px 2px 5px black;
+}
+
+@media (max-width: 650px) {
+  body {
+    background-attachment: scroll;
+  }
+  .comic {
+    width: min(100%, 340px);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>PROJECT SENTINEL</h1>
+  <p class="subtitle">THE OFFICIAL COMIC LIBRARY</p>
+</header>
+
+<main>
+  <h2>SELECT AN ISSUE</h2>
+
+  <div class="library">
+
+    <div class="comic">
+      <img src="issue1-cover.png.png" alt="Project Sentinel Issue 1 cover">
+      <h3>ISSUE #1</h3>
+      <a class="read" href="index.html.html">READ COMIC</a>
+    </div>
+
+    <div class="comic">
+      <img src="issue2-cover.png.png" alt="Project Sentinel Issue 2 Saltwater cover">
+      <h3>ISSUE #2</h3>
+      <p>SALTWATER</p>
+      <a class="read" href="issue2.html">READ COMIC</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>PROJECT SENTINEL</footer>
+
+</body>
+</html>
