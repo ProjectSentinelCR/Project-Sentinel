@@ -100,12 +100,12 @@ footer { padding: 35px 15px; color: #ddd; text-shadow: 1px 2px 5px black; }
   <h2 id="heading">SELECT AN ISSUE</h2>
   <div class="library">
     <div class="comic">
-      <img src="issue1-cover.png.png" alt="Project Sentinel Issue 1 cover">
+      <img id="cover1" src="issue1-cover.png.png" alt="Project Sentinel Issue 1 cover">
       <h3 id="issue1">ISSUE #1</h3>
       <a class="read" id="link1" href="reader.html?edition=issue1-en">READ COMIC</a>
     </div>
     <div class="comic">
-      <img src="issue2-cover.png.png" alt="Project Sentinel Issue 2 Saltwater cover">
+      <img id="cover2" src="issue2-cover.png.png" alt="Project Sentinel Issue 2 Saltwater cover">
       <h3 id="issue2">ISSUE #2</h3>
       <p>SALTWATER</p>
       <a class="read" id="link2" href="reader.html?edition=issue2-en">READ COMIC</a>
@@ -115,6 +115,11 @@ footer { padding: 35px 15px; color: #ddd; text-shadow: 1px 2px 5px black; }
 <footer>PROJECT SENTINEL</footer>
 <script>
 function setLanguage(lang) {
+  document.getElementById('cover1').src =
+    lang === 'en' ? 'issue1-cover.png.png' : 'issue1-es/01.png';
+
+  document.getElementById('cover2').src =
+    lang === 'en' ? 'issue2-cover.png.png' : 'issue2-es/01.png';
   document.documentElement.lang = lang;
   document.getElementById('en').classList.toggle('active', lang === 'en');
   document.getElementById('es').classList.toggle('active', lang === 'es');
